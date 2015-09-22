@@ -1,0 +1,48 @@
+<div class="post">
+  <div class="post-metadata">
+    <div class="post-tags">
+      {{#tags}}
+        <div class="tag-human">
+          <a href="/tagged/{{.}}"><span>#</span>{{.}}</a>
+        </div>
+      {{/tags}}
+    </div>
+    <h1>{{title}}</h1>
+    <div class="date">{{#date}}{{{string}}}{{/date}}</div>
+  </div>
+  <div class="post-text">
+    {{{html}}}
+  </div>
+  <div class="post-post">
+    {{#author}}
+      <div class="author">
+        &mdash;
+        {{#author-link}}
+          <a href="{{author-link}}">{{author}}</a>
+        {{/author-link}}
+        {{^author-link}}
+          {{author}}
+        {{/author-link}}
+      </div>
+    {{/author}}
+  </div>
+  {{#footnotes}}
+    <div class="post-footnotes">
+      <h6>Footnotes</h6>
+      {{{footnotes}}}
+    </div>
+  {{/footnotes}}
+  {{#html}}
+  {{#social}}
+  <div>
+    <div class="social">
+      <a href="http://twitter.com/share?url={{url}}/{{slug}}/&text={{title}} by {{social}}"
+         target="_blank">Share on Twitter</a>
+      &nbsp;/&nbsp;
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{url}}/{{slug}}/"
+         target="_blank">Share on Facebook</a>
+    </div>
+  </div>
+  {{/social}}
+  {{/html}}
+</div>

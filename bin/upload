@@ -1,0 +1,2 @@
+aws s3 --region us-east-1 sync site/printed/ s3://tonal.goodhertz.co
+rm -rf site/printed/

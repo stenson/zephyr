@@ -1,0 +1,34 @@
+{{#grouped-index}}
+  {{#grouped-articles}}
+    <div class="posts-month">
+      <div class="posts-group-date">{{#date}}{{month-name}}, {{year}}{{/date}}</div>
+      <ul class="post-listing">
+        {{#articles}}
+          <li>
+            <a href="/{{slug}}/">
+              <span class="date">{{#date}}{{day}}{{/date}}</span>
+              <span class="title">{{title}}</span>
+              <span class="ellipses">...</span>
+              <span class="author">{{author}}</span>
+            </a>
+          </li>
+        {{/articles}}
+      </ul>
+    </div>
+  {{/grouped-articles}}
+{{/grouped-index}}
+{{^grouped-index}}
+  {{#grouped-articles}}
+    <ul class="post-listing">
+      {{#articles}}
+        <li>
+          <a href="/{{slug}}/">
+            {{title}}&nbsp;<span class="date">&nbsp;{{#date}}{{string}}{{/date}}</span>
+          </a>
+          <!--<span class="tags">{{#tags}}#<em>{{.}}</em>{{/tags}}</span>-->
+          <span class="lede">{{lede}}</span>
+        </li>
+      {{/articles}}
+    </ul>
+  {{/grouped-articles}}
+{{/grouped-index}}

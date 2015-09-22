@@ -1,0 +1,45 @@
+<div id="header-container">
+  {{#header}}
+  <div id="header" class="width">
+    <div id="logo">
+      {{#slogan}}
+      <div id="slogan"><span>{{slogan}}</span></div>
+      {{/slogan}}
+      {{#external}}
+        <a href="{{href}}" target="_blank" class="ghz">
+          <img src="{{logo}}" height="40"/>
+        </a>
+      {{/external}}
+      {{#home}}
+        <a href="/" class="tonal">
+          {{#logo}}
+            <img src="{{logo}}" height="40"/>
+          {{/logo}}
+          {{#text-logo}}{{text-logo}}{{/text-logo}}
+        </a>
+      {{/home}}
+    </div>
+  </div>
+  {{/header}}
+</div>
+<div id="container" class="width">
+  <div id="content">
+    {{{content}}}
+  </div>
+</div>
+<div id="footer-container">
+  <div id="footer" class="width">
+    {{#footer}}
+    <div id="footer-links">
+    {{#links}}
+      <a href="{{href}}">{{text}}</a><span class="slash">&nbsp;/&nbsp;</span>
+    {{/links}}
+    </div>
+    {{/footer}}
+    <div class="copyright">
+      {{#company}}
+          &copy; Copyright 2015, <a href="{{link}}">{{name}}</a>
+      {{/company}}
+    </div>
+  </div>
+</div>
