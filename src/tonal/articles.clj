@@ -19,7 +19,9 @@
 
 (defn yaml-config-at-path [path]
   (if (nil? path)
-    (throw (Exception. "site location required"))
+    (do
+      (println "~~ no site ~~")
+      nil)
     (let [yaml (yaml/parse-string (slurp (str path "/gloss.yml")))]
       (-> yaml
           (assoc :root path)

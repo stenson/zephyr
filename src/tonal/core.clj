@@ -8,7 +8,9 @@
             [ring.middleware.content-type :refer [wrap-content-type]]))
 
 (defn- read-config [config-mod]
-  (config-mod (articles/yaml-config-at-path (environ/env :config))))
+  (if (fn? config-mod)
+    (config-mod (articles/yaml-config-at-path (environ/env :config)))
+    config-mod))
 
 (defn- wrap-charset [handler]
   (fn [req]
@@ -32,7 +34,8 @@
        (func))))
 
 (def app
-  (app-with-mod))
+  (if (environ/env :config)
+    (app-with-mod)))
 
 (defn print-site
   ([]
