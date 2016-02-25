@@ -18,12 +18,13 @@
       {{/google}}
     {{/fonts}}
     {{#css}}
-      <link href="{{assets}}/css/{{.}}.css?t={{launch-time}}" rel="stylesheet"
-            type="text/css"/>
+      <link href="{{assets}}/css/{{.}}.css?t={{launch-time}}" rel="stylesheet" type="text/css"/>
     {{/css}}
+    <link href="{{assets}}/css/mobile.css?t={{launch-time}}" rel="stylesheet" type="text/css" media="screen and (max-width:600px)"/>
     {{#icons}}
       <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     {{/icons}}
+    <script src="//twemoji.maxcdn.com/twemoji.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     {{#post}}
       {{#meta-image}}
@@ -50,6 +51,8 @@
     {{/js}}
     {{#google-analytics}}
     <script>
+      twemoji.size = "36x36";
+      twemoji.parse(document.body);
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
               m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
