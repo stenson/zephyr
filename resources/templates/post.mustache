@@ -13,6 +13,20 @@
   <div class="post-text">
     {{{html}}}
   </div>
+  {{#hasSponsorships}}
+    <div id="sponsors-container">
+      <div id="sponsors">
+        <div class="sponsor-text">~ {{site-name}} is made possible by our generous sponsors ~</div>
+        {{#sponsorships}}
+          <div class="sponsorship">
+            <a href="{{link}}">
+              <img src="{{logo}}"/>
+            </a>
+          </div>
+        {{/sponsorships}}
+      </div>
+    </div>
+  {{/hasSponsorships}}
   <div class="post-post">
     {{#author}}
       <div class="author">

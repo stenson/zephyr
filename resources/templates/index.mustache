@@ -1,3 +1,18 @@
+{{#image-index}}
+  <div class="inline-about">{{{inline-about}}}</div>
+    <ul class="post-listing">
+      {{#ungrouped-articles}}
+        <li>
+          <a href="/{{slug}}/">
+            <em>{{#date}}{{{string}}}{{/date}}</em>
+            <div class="img" style="background-image:url({{meta-image}})"></div>
+            <span>{{lede}}</span>
+          </a>
+        </li>
+      {{/ungrouped-articles}}
+    </ul>
+{{/image-index}}
+{{^image-index}}
 {{#grouped-index}}
   {{#grouped-articles}}
     <div class="posts-month">
@@ -32,3 +47,4 @@
     </ul>
   {{/grouped-articles}}
 {{/grouped-index}}
+{{/image-index}}

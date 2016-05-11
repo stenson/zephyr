@@ -28,7 +28,8 @@
         meta (merge metadata
                     {:launch-time current-time-seconds
                      :title title
-                     :meta-image (:meta-image data)})]
+                     :meta-image (:meta-image data)
+                     :template initial-template})]
     (->> (cache-render initial-template (merge metadata data))
          (cache-render "shell" (assoc meta :post data) :content)
          (cache-render "layout" (assoc meta :post data) :content))))

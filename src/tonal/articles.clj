@@ -74,11 +74,19 @@
   (do (reset! memo-article-files nil))
   (let [articles (group-articles-by-month config)
         index-mod (or (:index-mod config) identity)]
-    (render/render "index" config (index-mod {:grouped-articles articles}))))
+    (render/render "index"
+                   config (index-mod {:grouped-articles articles
+                                      :ungrouped-articles
+                                      (->> (map :articles articles)
+                                           (apply concat))}))))
 
 (defn- render-atom [config _]
   (let [articles (sorted-articles config)]
     (rss/atom-xml config articles)))
+
+(defn- render-podcast-rss [config _]
+  (let [articles (sorted-articles config)]
+    (rss/podcast-xml config articles)))
 
 (defn- render-error [config _]
   (render/render "post" config {:title "Four-hundred & four"
@@ -121,4 +129,5 @@
         (merge (tagged-indices config))
         (assoc "/index.html" (partial render-index config))
         (assoc "/feed.xml" (partial render-atom config))
+        (assoc "/podcast.xml" (partial render-podcast-rss config))
         (assoc "/error.html" (partial (partial render-error config))))))

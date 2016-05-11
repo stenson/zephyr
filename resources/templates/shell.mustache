@@ -11,11 +11,13 @@
         </a>
       {{/external}}
       {{#home}}
-        <a href="/" class="tonal">
-          {{#logo}}
-            <img src="{{logo}}" height="40"/>
-          {{/logo}}
-          {{#text-logo}}{{text-logo}}{{/text-logo}}
+        <a href="/" class="tonal header-logo">
+          <div class="lining">
+            {{#logo}}
+              <img src="{{logo}}" height="{{#height}}{{height}}{{/height}}{{^height}}40{{/height}}"/>
+            {{/logo}}
+            {{#text-logo}}{{text-logo}}{{/text-logo}}
+          </div>
         </a>
       {{/home}}
     </div>
