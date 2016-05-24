@@ -1,3 +1,21 @@
+{{#teaser-index}}
+  <ul class="post-listing">
+    {{#ungrouped-articles}}
+      <li {{#podcast}}class="podcast{{podcast}}"{{/podcast}}>
+        <a href="/{{slug}}/">
+          <em>{{#date}}{{month}}.{{day}}.{{year}}{{/date}}</em>
+          <strong>{{title}}</strong>
+          {{#teaser-image}}
+            <img class="teaser" src="{{teaser-image}}"/>
+          {{/teaser-image}}
+          <span class="leder">{{lede}}</span>
+          <p>{{{first-paragraph}}} <span class="continue">> Continue Reading...</span></p>
+        </a>
+      </li>
+    {{/ungrouped-articles}}
+  </ul>
+{{/teaser-index}}
+{{^teaser-index}}
 {{#image-index}}
   <div class="inline-about">{{{inline-about}}}</div>
     <ul class="post-listing">
@@ -48,3 +66,4 @@
   {{/grouped-articles}}
 {{/grouped-index}}
 {{/image-index}}
+{{/teaser-index}}
