@@ -63,7 +63,7 @@
            [:url (:podcast-artwork config)]
            [:title (:title config)]
            [:link (:url config)]]
-          [:category "Arts"]
+          [:category "Music"]
           [:explicit "no"]
           [:itunes:author (:author config)]
           [:itunes:subtitle (:description config)]
@@ -71,8 +71,7 @@
            [:itunes:name (:author config)]
            [:itunes:email (:email config)]]
           [:itunes:explicit "no"]
-          [:itunes:category {:text "Arts"}
-           [:itunes:category {:text "Design"}]]
+          [:itunes:category {:text "Music"}]
           [:itunes:image {:href (:podcast-artwork config)}]
           (map (partial podcast-entry config) (filter :podcast posts))]])
       (xml/emit-str)))
