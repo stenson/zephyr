@@ -1,56 +1,60 @@
 (ns tonal.core
   (:require [stasis.core :as stasis]
             [tonal.articles :as articles]
-            [me.raynes.fs :as fs]
-            [environ.core :as environ]
             [ring.util.response :as res]
             [ring.middleware.file :refer [wrap-file]]
             [ring.middleware.content-type :refer [wrap-content-type]]
-            [endophile.core :as endo]
-            [tonal.reading :as reading]
-            [net.cgrand.enlive-html :as html]))
+            [tonal.html :as html]
+            [compojure.core :as c]
+            [compojure.route :as route]
+            [compojure.handler :as handler]
+            [org.httpkit.server :refer [run-server]]
+            [ring.middleware.reload :as reload]))
 
-(defn- read-config [config-mod]
-  (if (fn? config-mod)
-    (config-mod (articles/yaml-config-at-path (environ/env :config)))
-    config-mod))
+(defn read-config [where]
+  (articles/yaml-config-at-path where))
 
-(defn- wrap-charset [handler]
+(defn wrap-charset [handler]
   (fn [req]
     (let [resp (handler req)
-          ct (res/get-header resp "Content-Type")]
+          ct (get-in resp [:headers "Content-Type"])]
       (if (= "text/html" ct)
         (res/header resp "Content-Type" "text/html;charset=utf-8")
         resp))))
 
-(defn app-with-mod
-  ([]
-    (app-with-mod (fn [handler]
-                    (fn [req]
-                      (handler req)))
-                  identity))
-  ([func config-mod]
-   (-> (stasis/serve-pages (fn [] (articles/all-pages (read-config config-mod))))
-       (wrap-file (format "%s/assets/" (:root (read-config config-mod))))
-       (wrap-content-type)
-       (wrap-charset)
-       (func))))
+(defn app [where]
+  (-> (stasis/serve-pages (fn [] (articles/all-pages (read-config where))))
+      (wrap-file (format "%s/assets/" (:root (read-config where))))
+      (wrap-content-type)
+      (wrap-charset)))
 
-(def app
-  (if (environ/env :config)
-    (app-with-mod)))
+(defn print-site [where]
+  (let [{:keys [root] :as config} (read-config where)
+        qualify #(str root "/" %)
+        printed-dir (qualify "printed")]
+    (stasis/empty-directory! printed-dir)
+    (stasis/export-pages (articles/all-pages config) printed-dir)))
 
-(defn print-site
-  ([]
-    (print-site true identity))
-  ([include-assets config-mod]
-   (let [{:keys [root] :as config} (read-config config-mod)
-         qualify #(str root "/" %)
-         printed-dir (qualify "printed")]
-     (stasis/empty-directory! printed-dir)
-     (stasis/export-pages (articles/all-pages config) printed-dir)
-     (when (and false include-assets)
-       (fs/copy-dir-into (qualify "assets") printed-dir)))))
+(def where (atom nil))
 
-(defn print-articles []
-  (print-site false identity))
+(def index
+  )
+
+(c/defroutes
+  all-routes
+  (c/GET "/" [] (fn [_] (html/standard [:h1 "Hello world"])))
+  (route/resources "/"))
+
+(def handler
+  (-> (handler/site #'all-routes)
+      (reload/wrap-reload)
+      (ring.middleware.keyword-params/wrap-keyword-params)
+      (ring.middleware.params/wrap-params)
+      #_(stack/wrap-stacktrace)))
+
+(defn run-localhost []
+  (run-server handler {:port 3001}))
+
+(defn -main [& args]
+  (do (run-localhost)
+      (println "Running on 5002...")))
