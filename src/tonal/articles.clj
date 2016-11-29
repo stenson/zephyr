@@ -1,7 +1,8 @@
 (ns tonal.articles
   (:require [clojure.java.io :as jio]
-            [hieronymus.core :as hieronymus]
+    ;[hieronymus.core :as hieronymus]
             [tonal.render :as render]
+            [tonal.parsing :as parsing]
             [tonal.rss :as rss]
             [hiccup.core :as h]
             [net.cgrand.enlive-html :as enl]
@@ -57,7 +58,7 @@
           remotes (remote-article-files config)
           a-mod (or (:article-mod config) identity)]
       (->> (concat locals remotes)
-           (map #(assoc (a-mod (hieronymus/parse (slurp %) config)) :file %))
+           (map #(assoc (a-mod (parsing/text->data-structure % config)) :file %))
            (map (fn [article]
                   (assoc article :first-paragraph (first-paragraph article))))
            (filter #(not (:draft %)))
@@ -108,7 +109,9 @@
 
 (defn render-article [file config _]
   (let [a-mod (or (:article-mod config) identity)
-        rendered (a-mod (hieronymus/parse (slurp file) config))]
+        rendered (a-mod (parsing/text->data-structure file config))
+        ;rendered (a-mod (hieronymus/parse (slurp file) config))
+        ]
     (render/render "post" config rendered)))
 
 (defn render-tagged-index [tag config _]

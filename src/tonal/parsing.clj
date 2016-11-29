@@ -1,5 +1,5 @@
 (ns tonal.parsing
-  (:require [hieronymus.core :as hieronymus]))
+  (:require [tonal.hieronymus :as hiero]))
 
 (defn text->data-structure [file config]
-  (hieronymus/parse (slurp file) config))
+  (hiero/str->data-structure (slurp file) config))

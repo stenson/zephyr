@@ -14,8 +14,7 @@
                  [clj-time "0.8.0"]
                  [environ "0.5.0"]
                  [me.raynes/fs "1.4.6"]
-                 [endophile "0.1.2"]
-                 [hieronymus "0.2.1-SNAPSHOT"]]
+                 [endophile "0.1.2"]]
   :plugins [[lein-ring "0.9.1"]]
   :ring {:handler tonal.core/app}
   :aliases {"print-site" ["run" "-m" "tonal.core/print-site"]
